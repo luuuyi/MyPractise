@@ -16,3 +16,29 @@ public class Solution {
         return release2; ///Since release1 is initiated as 0, so release2 will always higher than release1.
     }
 }
+
+class Solution {
+private:
+    int calc(vector<int> &prices, int begin, int end){
+        vector<int> tmp;
+        int min_v = 0x7fffffff;
+        for(int i=begin;i<=end;i++){
+            min_v = min(prices[i],min_v);
+            tmp.push_back(min_v);
+        }
+        int max_profit = 0;
+        for(int i=0;i<tmp.size();i++){
+            max_profit = max(max_profit,prices[i+begin]-tmp[i]);
+        }
+        return max_profit;
+    }
+public:
+    int maxProfit(vector<int> &prices) {
+        int lens = prices.size();
+        int max_profit = 0;
+        for(int i=0;i<lens;i++){
+            max_profit = max(calc(prices,0,i) + calc(prices,i+1,lens-1),max_profit);
+        }
+        return max_profit;
+    }
+};
